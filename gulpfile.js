@@ -14,10 +14,6 @@ gulp.task('clean', function(done) {
   rimraf('./dist', done);
 });
 
-gulp.task('copy', function() {
-  return 
-});
-
 // Compile layouts, pages, and partials into flat HTML files
 // Then parse using Inky templates
 gulp.task('pages', function() {
