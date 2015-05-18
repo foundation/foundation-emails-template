@@ -1,0 +1,24 @@
+{
+  "name": "foundation-emails-template",
+  "version": "0.0.1",
+  "description": "Basic template for a Foundation for Emails project.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ZURB <foundation@zurb.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-htmlmin": "^1.1.1",
+    "gulp-inject": "^1.2.0",
+    "gulp-inline-css": "^2.0.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-ruby-sass": "^1.0.5",
+    "gulp-webserver": "^0.9.1",
+    "media-query-extractor": "^0.1.1",
+    "rimraf": "^2.3.3",
+    "run-sequence": "^1.1.0",
+    "yargs": "^3.9.0"
+  }
+}
