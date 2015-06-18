@@ -4,7 +4,7 @@ var mq       = require('media-query-extractor');
 var rimraf   = require('rimraf');
 var shipyard = require('shipyard');
 var yargs    = require('yargs').argv;
-
+var sequence = require('run-sequence');
 // Look for the --production flag
 var isProduction = !!(yargs.production);
 
@@ -21,7 +21,7 @@ gulp.task('pages', function() {
     .pipe(shipyard({
       layouts: './src/layouts',
       partials: './src/partials/**/*.html'
-    }));
+    }))
     .pipe($.inky())
     .pipe(gulp.dest('./dist'));
 });

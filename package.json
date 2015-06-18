@@ -4,6 +4,7 @@
   "description": "Basic template for a Foundation for Emails project.",
   "main": "gulpfile.js",
   "scripts": {
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ZURB <foundation@zurb.com>",
@@ -19,6 +20,7 @@
     "media-query-extractor": "^0.1.1",
     "rimraf": "^2.3.3",
     "run-sequence": "^1.1.0",
+    "shipyard": "git://github.com/gakimball/shipyard.git",
     "yargs": "^3.9.0"
   }
 }
