@@ -28,9 +28,7 @@ gulp.task('pages', function() {
 
 // Compile Sass into CSS
 gulp.task('sass', function() {
-  return $.rubySass('./src/assets/scss/app.scss', {
-    loadPath: './bower_components/foundation-emails/scss'
-  })
+  return $.rubySass('./src/assets/scss/app.scss')
     .pipe(gulp.dest('./dist/assets/css'));
 });
 
