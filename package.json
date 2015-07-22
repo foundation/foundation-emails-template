@@ -13,6 +13,7 @@
     "gulp": "^3.8.11",
     "gulp-htmlmin": "^1.1.1",
     "gulp-inject": "^1.2.0",
+    "gulp-inky": "git://github.com/zurb/gulp-inky.git",
     "gulp-inline-css": "^2.0.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-ruby-sass": "^1.0.5",

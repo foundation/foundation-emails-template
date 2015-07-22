@@ -31,7 +31,7 @@ gulp.task('sass', function() {
   return $.rubySass('./src/assets/scss/app.scss', {
     loadPath: './bower_components/foundation-emails/scss'
   })
-    .pipe(gulp.dist('./dist/assets/css'));
+    .pipe(gulp.dest('./dist/assets/css'));
 });
 
 // Inline CSS and minify HTML
