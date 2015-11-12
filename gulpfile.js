@@ -2,7 +2,7 @@ var gulp     = require('gulp');
 var $        = require('gulp-load-plugins')();
 var mq       = require('media-query-extractor');
 var rimraf   = require('rimraf');
-var shipyard = require('shipyard');
+var panini = require('panini');
 var yargs    = require('yargs').argv;
 var sequence = require('run-sequence');
 // Look for the --production flag
@@ -18,7 +18,7 @@ gulp.task('clean', function(done) {
 // Then parse using Inky templates
 gulp.task('pages', function() {
   return gulp.src('./src/pages/**/*.html')
-    .pipe(shipyard({
+    .pipe(panini({
       layouts: './src/layouts',
       partials: './src/partials/**/*.html'
     }))
@@ -28,8 +28,9 @@ gulp.task('pages', function() {
 
 // Compile Sass into CSS
 gulp.task('sass', function() {
-  return $.rubySass('./src/assets/scss/app.scss')
-    .pipe(gulp.dest('./dist/assets/css'));
+  return gulp.src(['./src/assets/scss/app.scss','../foundation-emails/scss/ink.scss'])
+    .pipe($.sass())
+    .pipe(gulp.dest('./dist/css'));
 });
 
 // Inline CSS and minify HTML
@@ -52,9 +53,15 @@ gulp.task('inline', ['build'], function() {
     .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('copy', function() {
+  return gulp.src('./src/images/*')
+    .pipe(gulp.dest('./dist/images'))
+  ;
+});
+
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build', function(done) {
-  var tasks = ['pages', 'sass'];
+  var tasks = ['pages', 'sass', 'copy'];
   if (isProduction) tasks.push('inline');
 
   sequence('clean', tasks, done);
