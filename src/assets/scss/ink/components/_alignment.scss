@@ -1,0 +1,30 @@
+// Ink by ZURB
+// zurb.com/ink/
+// Licensed under MIT Open Source
+
+////
+/// @group alignment
+////
+
+table.center,
+td.center,
+h1.center,
+h2.center,
+h3.center,
+h4.center,
+h5.center,
+h6.center,
+p.center,
+span.center {
+  text-align: center;
+}
+
+span.center {
+  display: block;
+  width: 100%;
+}
+
+img.center {
+  margin: 0 auto;
+  float: none;
+}

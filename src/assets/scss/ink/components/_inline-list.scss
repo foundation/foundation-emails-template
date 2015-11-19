@@ -1,0 +1,21 @@
+// Ink by ZURB
+// zurb.com/ink/
+// Licensed under MIT Open Source
+
+@import 'global';
+
+////
+/// @group inline-list
+////
+
+table.inline-list {
+  width: 100% !important;
+}
+
+td.vertical {
+  padding-top: 10px !important;
+}
+
+table[class="body"] table.inline-list td.vertical {
+  display: block !important;
+}

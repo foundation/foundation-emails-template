@@ -28,7 +28,7 @@ gulp.task('pages', function() {
 
 // Compile Sass into CSS
 gulp.task('sass', function() {
-  return gulp.src(['./src/assets/scss/app.scss','../foundation-emails/scss/ink.scss'])
+  return gulp.src(['./src/assets/scss/app.scss','./src/assets/scss/ink.scss'])
     .pipe($.sass())
     .pipe(gulp.dest('./dist/css'));
 });

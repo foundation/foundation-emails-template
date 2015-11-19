@@ -1,0 +1,67 @@
+// Ink by ZURB
+// zurb.com/ink/
+// Licensed under MIT Open Source
+
+@import 'global';
+
+////
+/// @group callout
+////
+
+/// Defualt background color of a callout.
+/// @type Color
+$callout-background-color: $light-gray !default;
+
+/// Defualt padding color of a callout.
+/// @type Number
+$callout-padding: 10px !default;
+
+/// Default border for a callout.
+/// @type List
+$callout-border: 1px solid darken($callout-background-color, 20%) !default;
+
+/// Default border for a success callout.
+/// @type List
+$callout-border-success: 1px solid darken($success-color, 20%) !default;
+
+/// Default border for a warning callout.
+/// @type List
+$callout-border-warning: 1px solid darken($warning-color, 20%) !default;
+
+/// Default border for a alert callout.
+/// @type List
+$callout-border-alert: 1px solid darken darken($alert-color, 20%) !default;
+
+td.callout {
+  width: 100%;
+  border: $callout-border;
+  padding: $callout-padding !important;
+  background: $callout-background-color;
+
+  &.success {
+    background: $success-color !important;
+    border: $callout-border-success !important;
+    color: $white !important;
+  }
+
+  &.warning {
+    background: $warning-color !important;
+    border: $callout-border-warning !important;
+    color: $white !important;
+  }
+
+  &.alert {
+    background: $alert-color !important;
+    border: $callout-border-alert !important;
+    color: $white !important;
+  }
+}
+
+///check this
+.sub-grid table {
+  width: 100%;
+}
+
+.sub-grid td.sub-columns {
+  padding-bottom: 0;
+}
