@@ -48,7 +48,7 @@ gulp.task('inline', ['build'], function() {
 
   return gulp.src('./dist/*.html')
     .pipe($.inlineCss())
-    .pipe(inject())
+    .pipe(inject)
     .pipe($.htmlmin())
     .pipe(gulp.dest('./dist'));
 });
