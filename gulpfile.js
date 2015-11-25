@@ -40,7 +40,7 @@ gulp.task('inline', ['build'], function() {
 
   // Injects that extracted CSS into the HTML
   var inject = $.inject(gulp.src('./dist/css/app-mq.css'), {
-    starttag: '<!-- inject:mq -->',
+    starttag: '<!-- inject:mq-css -->',
     transform: function(path, file) {
       return '<style>\n' + file.contents.toString() + '\n</style>';
     }
