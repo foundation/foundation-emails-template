@@ -36,10 +36,10 @@ gulp.task('sass', function() {
 // Inline CSS and minify HTML
 gulp.task('inline', ['build'], function() {
   // Extracts media query-specific CSS into a separate file
-  mq('./dist/assets/css/app.css', './dist/assets/css/app-mq.css');
+  mq('./dist/css/app.css', './dist/css/app-mq.css');
 
   // Injects that extracted CSS into the HTML
-  var inject = $.inject(gulp.src('./dist/assets/css/app-mq.css'), {
+  var inject = $.inject(gulp.src('./dist/css/app-mq.css'), {
     starttag: '<!-- inject:mq -->',
     transform: function(path, file) {
       return '<style>\n' + file.contents.toString() + '\n</style>';
