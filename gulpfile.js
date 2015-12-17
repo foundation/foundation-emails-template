@@ -21,7 +21,7 @@ gulp.task('pages', function() {
     .pipe(panini({
       root: './src/pages',
       layouts: './src/layouts',
-      partials: './src/partials/**/*.html'
+      partials: './src/partials'
     }))
     .pipe($.inky())
     .pipe(gulp.dest('./dist'));
