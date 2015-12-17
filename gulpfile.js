@@ -19,6 +19,7 @@ gulp.task('clean', function(done) {
 gulp.task('pages', function() {
   return gulp.src('./src/pages/**/*.html')
     .pipe(panini({
+      root: './src/pages',
       layouts: './src/layouts',
       partials: './src/partials/**/*.html'
     }))
