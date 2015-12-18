@@ -37,11 +37,11 @@ gulp.task('sass', function() {
 // Inline CSS and minify HTML
 gulp.task('inline', ['build'], function() {
   // Extracts media query-specific CSS into a separate file
-  mq('./dist/assets/css/app.css', './dist/assets/css/app-mq.css');
+  mq('./dist/css/app.css', './dist/css/app-mq.css');
 
   // Injects that extracted CSS into the HTML
-  var inject = $.inject(gulp.src('./dist/assets/css/app-mq.css'), {
-    starttag: '<!-- inject:mq -->',
+  var inject = $.inject(gulp.src('./dist/css/app-mq.css'), {
+    starttag: '<!-- inject:mq-css -->',
     transform: function(path, file) {
       return '<style>\n' + file.contents.toString() + '\n</style>';
     }
@@ -49,7 +49,7 @@ gulp.task('inline', ['build'], function() {
 
   return gulp.src('./dist/*.html')
     .pipe($.inlineCss())
-    .pipe(inject())
+    .pipe(inject)
     .pipe($.htmlmin())
     .pipe(gulp.dest('./dist'));
 });
