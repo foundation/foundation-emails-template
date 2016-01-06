@@ -61,7 +61,7 @@ function copy() {
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
-  gulp.series(buildTasks));
+  gulp.series.apply(gulp, buildTasks));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default', 
