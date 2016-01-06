@@ -78,7 +78,7 @@ function server(done) {
 // Watch for file changes
 function watch() {
   gulp.watch('src/pages/**/*.html', gulp.series(pages, browser.reload));
-  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], sass);
+  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, browser.reload));
 }
 
 function inliner(options) {
