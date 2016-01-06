@@ -35,6 +35,11 @@ function pages() {
     .pipe(gulp.dest('dist'));
 }
 
+function resetPages(done) {
+  panini.refresh();
+  done();
+}
+
 // Compile Sass into CSS
 function sass() {
   return gulp.src('src/assets/scss/app.scss')
@@ -78,6 +83,7 @@ function server(done) {
 // Watch for file changes
 function watch() {
   gulp.watch('src/pages/**/*.html', gulp.series(pages, browser.reload));
+  gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, browser.reload));
 }
 
