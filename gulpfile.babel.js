@@ -10,7 +10,7 @@ import lazypipe from 'lazypipe';
 const $ = plugins();
 
 // Look for the --production flag
-const isProduction = !!(yargs.production);
+const isProduction = !!(yargs.argv.production);
 
 // Only inline if the --production flag is enabled
 var buildTasks = [clean, copy, pages, sass];
