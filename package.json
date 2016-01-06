@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp",
-    "build": "gulp build --production"
+    "build": "gulp --production"
   },
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
