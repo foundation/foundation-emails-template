@@ -6,6 +6,7 @@ import rimraf   from 'rimraf';
 import panini   from 'panini';
 import yargs    from 'yargs';
 import lazypipe from 'lazypipe';
+import inky     from 'inky';
 
 const $ = plugins();
 
@@ -31,7 +32,7 @@ function pages() {
       layouts: 'src/layouts',
       partials: 'src/partials'
     }))
-    .pipe($.inky())
+    .pipe(inky())
     .pipe(gulp.dest('dist'));
 }
 

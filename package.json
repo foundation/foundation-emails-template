@@ -18,18 +18,16 @@
     "gulp-htmlmin": "^1.1.1",
     "gulp-if": "^2.0.0",
     "gulp-inject": "^3.0.0",
-    "gulp-inky": "git://github.com/zurb/gulp-inky.git",
     "gulp-inline-css": "^3.0.0",
     "gulp-load-plugins": "^1.1.0",
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-webserver": "^0.9.1",
-    "inky": "git://github.com/zurb/inky-parse.git",
+    "inky": "^0.1.0",
     "lazypipe": "^1.0.1",
     "media-query-extractor": "^0.1.1",
     "panini": "^1.1.1",
     "rimraf": "^2.3.3",
-    "run-sequence": "^1.1.0",
     "yargs": "^3.9.0"
   }
 }
