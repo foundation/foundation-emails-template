@@ -10,7 +10,7 @@
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
   "dependencies": {
-    "foundation-emails": "2.0.0-beta.1"
+    "foundation-emails": "2.0.0-beta.2"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -26,7 +26,7 @@
     "gulp-load-plugins": "^1.1.0",
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
-    "inky": "1.0.0-rc.1",
+    "inky": "1.0.0-rc.2",
     "lazypipe": "^1.0.1",
     "media-query-extractor": "^0.1.1",
     "panini": "^1.2.0",
