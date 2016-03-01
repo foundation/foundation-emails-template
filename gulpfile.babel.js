@@ -35,12 +35,12 @@ function clean(done) {
 // Then parse using Inky templates
 function pages() {
   return gulp.src('src/pages/**/*.html')
-    .pipe(inky())
     .pipe(panini({
       root: 'src/pages',
       layouts: 'src/layouts',
       partials: 'src/partials'
     }))
+    .pipe(inky())
     .pipe(gulp.dest('dist'));
 }
 
