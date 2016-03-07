@@ -11,7 +11,7 @@
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
   "dependencies": {
-    "foundation-emails": "2.0.0-rc.2"
+    "foundation-emails": "zurb/foundation-emails#v2.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
