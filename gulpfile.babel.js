@@ -1,7 +1,6 @@
 import gulp     from 'gulp';
 import plugins  from 'gulp-load-plugins';
 import browser  from 'browser-sync';
-import mq       from 'media-query-extractor';
 import rimraf   from 'rimraf';
 import panini   from 'panini';
 import yargs    from 'yargs';
