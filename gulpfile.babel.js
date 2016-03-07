@@ -7,6 +7,8 @@ import panini   from 'panini';
 import yargs    from 'yargs';
 import lazypipe from 'lazypipe';
 import inky     from 'inky';
+import fs       from 'fs';
+import siphon   from 'siphon-media-query';
 
 const $ = plugins();
 
@@ -95,21 +97,14 @@ function watch() {
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
 function inliner(options) {
-  var cssPath = options.css;
-  var cssMqPath = cssPath.replace(/\.css$/, '-mq.css');
-
-  // Extracts media query-specific CSS into a separate file
-  mq(cssPath, cssMqPath, [
-    'only screen and (max-width: 580px)|' + cssMqPath
-  ]);
+  var css = fs.readFileSync(options.css).toString();
+  var mqCss = siphon(css);
 
   var pipe = lazypipe()
-    .pipe($.inlineCss)
-    .pipe($.inject, gulp.src(cssMqPath), {
-      transform: function(path, file) {
-        return '<style>\n' + file.contents.toString() + '\n</style>';
-      }
+    .pipe($.inlineCss, {
+      applyStyleTags: false
     })
+    .pipe($.injectString.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
     .pipe($.htmlmin, {
       collapseWhitespace: false,
       minifyCSS: true
