@@ -14,13 +14,9 @@ const $ = plugins();
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
 
-// Only inline if the --production flag is enabled
-var buildTasks = [clean, pages, sass, images];
-if (PRODUCTION) buildTasks.push(inline);
-
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
-  gulp.series.apply(gulp, buildTasks));
+  gulp.series(clean, pages, sass, images, inline));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -72,9 +68,7 @@ function images() {
 // Inline CSS and minify HTML
 function inline() {
   return gulp.src('dist/**/*.html')
-    .pipe(inliner({
-      css: 'dist/css/app.css'
-    }))
+    .pipe($.if(PRODUCTION, inliner('dist/css/app.css')))
     .pipe(gulp.dest('dist'));
 }
 
@@ -88,15 +82,15 @@ function server(done) {
 
 // Watch for file changes
 function watch() {
-  gulp.watch('src/pages/**/*.html', gulp.series(pages, browser.reload));
-  gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, browser.reload));
-  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, browser.reload));
+  gulp.watch('src/pages/**/*.html', gulp.series(pages, inline, browser.reload));
+  gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, inline, browser.reload));
+  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, pages, inline, browser.reload));
   gulp.watch('src/img/**/*', gulp.series(images, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
-function inliner(options) {
-  var css = fs.readFileSync(options.css).toString();
+function inliner(css) {
+  var css = fs.readFileSync(css).toString();
   var mqCss = siphon(css);
 
   var pipe = lazypipe()
