@@ -105,7 +105,7 @@ function inliner(options) {
     })
     .pipe($.injectString.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
     .pipe($.htmlmin, {
-      collapseWhitespace: false,
+      collapseWhitespace: true,
       minifyCSS: true
     });
 
