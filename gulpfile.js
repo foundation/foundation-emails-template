@@ -1,13 +1,15 @@
-import gulp     from 'gulp';
-import plugins  from 'gulp-load-plugins';
-import browser  from 'browser-sync';
-import rimraf   from 'rimraf';
-import panini   from 'panini';
-import yargs    from 'yargs';
-import lazypipe from 'lazypipe';
-import inky     from 'inky';
-import fs       from 'fs';
-import siphon   from 'siphon-media-query';
+'use strict'
+
+const gulp     = require('gulp');
+const plugins  = require('gulp-load-plugins');
+const browser  = require('browser-sync');
+const rimraf   = require('rimraf');
+const panini   = require('panini');
+const yargs    = require('yargs');
+const lazypipe = require('lazypipe');
+const inky     = require('inky');
+const fs       = require('fs');
+const siphon   = require('siphon-media-query');
 
 const $ = plugins();
 
