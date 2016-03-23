@@ -17,7 +17,7 @@
 // ---------
 
 $primary-color: #2199e8;
-$secondary-color: #777;
+$secondary-color: #777777;
 $success-color: #3adb76;
 $warning-color: #ffae00;
 $alert-color: #ec5840;
@@ -31,11 +31,11 @@ $global-width: 580px;
 $global-width-small: 95%;
 $global-gutter: 16px;
 $body-background: $light-gray;
-$container-background-color: $white;
+$container-background: $white;
 $global-font-color: $black;
 $body-font-family: Helvetica, Arial, sans-serif;
 $global-padding: 16px;
-$global-margin: 32px;
+$global-margin: 16px;
 $global-radius: 3px;
 $global-rounded: 500px;
 $global-breakpoint: $global-width + $global-gutter;
@@ -58,19 +58,20 @@ $block-grid-gutter: $global-gutter;
 $global-font-weight: normal;
 $header-color: inherit;
 $global-line-height: 1.3;
-$global-font-size: 14px;
+$global-font-size: 16px;
 $body-line-height: 19px;
 $header-font-family: $body-font-family;
 $header-font-weight: $global-font-weight;
-$h1-font-size: 40px;
-$h2-font-size: 36px;
-$h3-font-size: 32px;
-$h4-font-size: 28px;
-$h5-font-size: 24px;
-$h6-font-size: 20px;
+$h1-font-size: 34px;
+$h2-font-size: 30px;
+$h3-font-size: 28px;
+$h4-font-size: 24px;
+$h5-font-size: 20px;
+$h6-font-size: 18px;
 $header-margin-bottom: 10px;
 $paragraph-margin-bottom: 10px;
-$small-font-size: 10px;
+$small-font-size: 80%;
+$small-font-color: $medium-gray;
 $lead-font-size: $global-font-size * 1.25;
 $lead-line-height: 1.6;
 $text-padding: 10px;
@@ -119,6 +120,7 @@ $button-rounded: $global-rounded;
 $callout-background: $white;
 $callout-background-fade: 85%;
 $callout-padding: 10px;
+$callout-margin-bottom: $global-margin;
 $callout-border: 1px solid darken($callout-background, 20%);
 $callout-border-secondary: 1px solid darken($secondary-color, 20%);
 $callout-border-success: 1px solid darken($success-color, 20%);
@@ -128,10 +130,17 @@ $callout-border-alert: 1px solid darken($alert-color, 20%);
 // 7. Menu
 // -------
 
-$menu-item-padding: 20px;
-$menu-simple-item-spacing: 10px;
+$menu-item-padding: 10px;
+$menu-item-gutter: 10px;
+$menu-item-color: $primary-color;
 
 // 8. Thumbnial
 // ------------
 
+$thumbnail-border: solid 4px $white;
+$thumbnail-margin-bottom: $global-margin;
 $thumbnail-shadow: 0 0 0 1px rgba($black, 0.2);
+$thumbnail-shadow-hover: 0 0 6px 1px rgba($primary-color, 0.5);
+$thumbnail-transition: box-shadow 200ms ease-out;
+$thumbnail-radius: $global-radius;
+
