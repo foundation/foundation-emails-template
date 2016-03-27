@@ -11,6 +11,9 @@ import siphon   from 'siphon-media-query';
 
 const $ = plugins();
 
+// Config file containing s3, litmus and other account info
+const CONFIG = JSON.parse(fs.readFileSync('./emails.config.json'));
+
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
 
@@ -21,6 +24,14 @@ gulp.task('build',
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
   gulp.series('build', server, watch));
+
+// Build emails, then send to litmus
+gulp.task('litmus',
+  gulp.series(
+    'build',
+    s3,
+    litmus
+));
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -105,3 +116,47 @@ function inliner(css) {
 
   return pipe();
 }
+
+// Send image assets to S3 for temporary hosting
+function s3() {
+  // create a new publisher using S3 options
+  // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
+  var publisher = $.awspublish.create({
+    region: CONFIG.aws.region,
+    params: {
+      Bucket: CONFIG.aws.bucket
+    },
+    accessKeyId: CONFIG.aws.key,
+    secretAccessKey: CONFIG.aws.secret
+  });
+
+  // define custom headers
+  var headers = {
+    'Cache-Control': 'max-age=315360000, no-transform, public'
+    // ...
+  };
+
+  return gulp.src('./dist/assets/img/*')
+     // gzip, Set Content-Encoding headers and add .gz extension
+    //.pipe($.awspublish.gzip({ ext: '.gz' }))
+
+    // publisher will add Content-Length, Content-Type and headers specified above
+    // If not specified it will set x-amz-acl to public-read by default
+    .pipe(publisher.publish(headers))
+
+    // create a cache file to speed up consecutive uploads
+    .pipe(publisher.cache())
+
+     // print upload updates to console
+    .pipe($.awspublish.reporter());
+}
+
+// Send email to Litmus for testing
+function litmus() {
+  return gulp.src('dist/index.html')
+  .pipe($.litmus(CONFIG.litmus));
+}
+
+
+
+
