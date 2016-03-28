@@ -12,7 +12,7 @@ import siphon   from 'siphon-media-query';
 const $ = plugins();
 
 // Config file containing s3, litmus and other account info
-const CONFIG = JSON.parse(fs.readFileSync('./user.config.json'));
+const CONFIG = JSON.parse(fs.readFileSync('./config.json'));
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
