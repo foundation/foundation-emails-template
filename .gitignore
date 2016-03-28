@@ -5,4 +5,4 @@ bower_components
 dist
 .sass-cache
 .awspublish*
-emails.config.json
+user.config.json

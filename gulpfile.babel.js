@@ -12,7 +12,7 @@ import siphon   from 'siphon-media-query';
 const $ = plugins();
 
 // Config file containing s3, litmus and other account info
-const CONFIG = JSON.parse(fs.readFileSync('./emails.config.json'));
+const CONFIG = JSON.parse(fs.readFileSync('./user.config.json'));
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
@@ -27,11 +27,7 @@ gulp.task('default',
 
 // Build emails, then send to litmus
 gulp.task('litmus',
-  gulp.series(
-    'build',
-    s3,
-    litmus
-));
+  gulp.series('build', s3, litmus ));
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -108,7 +104,7 @@ function inliner(css) {
     .pipe($.inlineCss, {
       applyStyleTags: false
     })
-    .pipe($.injectString.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
+    .pipe($.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
     .pipe($.htmlmin, {
       collapseWhitespace: true,
       minifyCSS: true
@@ -116,7 +112,6 @@ function inliner(css) {
 
   return pipe();
 }
-
 // Send image assets to S3 for temporary hosting
 function s3() {
   // create a new publisher using S3 options
@@ -137,15 +132,17 @@ function s3() {
   };
 
   return gulp.src('./dist/assets/img/*')
-     // gzip, Set Content-Encoding headers and add .gz extension
-    //.pipe($.awspublish.gzip({ ext: '.gz' }))
+    // Place into folders
+    .pipe($.rename(function (path) {
+        path.dirname = CONFIG.common.subject +'/'+ path.dirname;
+    }))
 
     // publisher will add Content-Length, Content-Type and headers specified above
     // If not specified it will set x-amz-acl to public-read by default
     .pipe(publisher.publish(headers))
 
     // create a cache file to speed up consecutive uploads
-    .pipe(publisher.cache())
+    //.pipe(publisher.cache())
 
      // print upload updates to console
     .pipe($.awspublish.reporter());
@@ -153,8 +150,12 @@ function s3() {
 
 // Send email to Litmus for testing
 function litmus() {
-  return gulp.src('dist/index.html')
-  .pipe($.litmus(CONFIG.litmus));
+  // Need to replace with email specific URL
+  var cdnURL = CONFIG.aws.url;
+
+  return gulp.src('dist/**/*.html')
+    .pipe($.replace(/=('|")(\/?assets\/img)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
+    .pipe($.litmus(CONFIG.litmus));
 }
 
 
