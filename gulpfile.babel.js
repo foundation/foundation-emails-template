@@ -85,7 +85,7 @@ function watch() {
   gulp.watch('src/pages/**/*.html', gulp.series(pages, inline, browser.reload));
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, inline, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, pages, inline, browser.reload));
-  gulp.watch('src/img/**/*', gulp.series(images, browser.reload));
+  gulp.watch('src/assets/img/**/*', gulp.series(images, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
