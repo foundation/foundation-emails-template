@@ -35,7 +35,8 @@ function pages() {
     .pipe(panini({
       root: 'src/pages',
       layouts: 'src/layouts',
-      partials: 'src/partials'
+      partials: 'src/partials',
+      helpers: 'src/helpers'
     }))
     .pipe(inky())
     .pipe(gulp.dest('dist'));
