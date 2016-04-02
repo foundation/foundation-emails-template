@@ -8,6 +8,8 @@ import lazypipe from 'lazypipe';
 import inky     from 'inky';
 import fs       from 'fs';
 import siphon   from 'siphon-media-query';
+import path     from 'path';
+import merge    from 'merge-stream';
 
 const $ = plugins();
 
@@ -27,7 +29,11 @@ gulp.task('default',
 
 // Build emails, then send to litmus
 gulp.task('litmus',
-  gulp.series('build', s3, litmus ));
+  gulp.series('build', s3, litmus));
+
+// Build emails, then zip
+gulp.task('zip',
+  gulp.series('build', zip));
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -67,9 +73,9 @@ function sass() {
 
 // Copy and compress images
 function images() {
-  return gulp.src('src/assets/img/*')
+  return gulp.src('src/assets/images/*')
     .pipe($.imagemin())
-    .pipe(gulp.dest('./dist/assets/img'));
+    .pipe(gulp.dest('./dist/images'));
 }
 
 // Inline CSS and minify HTML
@@ -92,7 +98,7 @@ function watch() {
   gulp.watch('src/pages/**/*.html', gulp.series(pages, inline, browser.reload));
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, inline, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, pages, inline, browser.reload));
-  gulp.watch('src/img/**/*', gulp.series(images, browser.reload));
+  gulp.watch('src/assets/images/**/*', gulp.series(images, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
@@ -112,7 +118,8 @@ function inliner(css) {
 
   return pipe();
 }
-// Send image assets to S3 for temporary hosting
+
+// Send image assets to S3 for temporary hosting (litmus tests)
 function s3() {
   // create a new publisher using S3 options
   // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
@@ -128,13 +135,12 @@ function s3() {
   // define custom headers
   var headers = {
     'Cache-Control': 'max-age=315360000, no-transform, public'
-    // ...
   };
 
-  return gulp.src('./dist/assets/img/*')
-    // Place into folders
-    .pipe($.rename(function (path) {
-        path.dirname = CONFIG.common.subject +'/'+ path.dirname;
+  return gulp.src('./dist/images/*')
+    // Place images into folder
+    .pipe($.rename(function (filePath) {
+        filePath.dirname = CONFIG.common.subject +'/'+ filePath.dirname;
     }))
 
     // publisher will add Content-Length, Content-Type and headers specified above
@@ -154,9 +160,51 @@ function litmus() {
   var cdnURL = CONFIG.aws.url;
 
   return gulp.src('dist/**/*.html')
-    .pipe($.replace(/=('|")(\/?assets\/img)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
+    .pipe($.replace(/=('|")(\/?images)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
     .pipe($.litmus(CONFIG.litmus));
 }
+
+// Copy and compress into Zip
+function zip() {
+  var dist = 'dist';
+  var ext = '.html';
+
+  function getHtmlFiles(dir) {
+    return fs.readdirSync(dir)
+      .filter(function(file) {
+        var fileExt = path.join(dir, file);
+        var isHtml = path.extname(fileExt) == ext;
+        return fs.statSync(fileExt).isFile() && isHtml;
+      });
+  }
+
+  var htmlFiles = getHtmlFiles(dist);
+
+  var moveTasks = htmlFiles.map(function(file){
+    var sourcePath = path.join(dist, file);
+    var fileName = path.basename(sourcePath, ext);
+
+    var moveHTML = gulp.src(sourcePath)
+      .pipe($.rename(function (path) {
+        path.dirname = fileName;
+        return path;
+      }));
+
+    var moveImages = gulp.src(sourcePath)
+      .pipe($.htmlSrc({ selector: 'img'}))
+      .pipe($.rename(function (path) {
+        path.dirname = fileName + '/images';
+        return path;
+      }));
+
+    return merge(moveHTML, moveImages)
+      .pipe($.zip(fileName+ '.zip'))
+      .pipe(gulp.dest('dist'));
+  });
+
+  return merge(moveTasks);
+}
+
 
 
 
