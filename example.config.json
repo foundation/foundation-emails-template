@@ -1,0 +1,18 @@
+{
+    "common": {
+        "subject": "My Email"
+    },
+    "aws": {
+        "region": "REGION_HERE",
+        "key": "KEY_HERE",
+        "secret": "SECRET_HERE",
+        "bucket": "BUCKET_NAME_HERE",
+        "url": "BUCKET_URL_HERE"
+    },
+    "litmus": {
+        "username": "USERNAME_HERE",
+        "password": "PASSWORD_HERE",
+        "url": "URL_HERE",
+        "applications": ["ol2003","ol2007","ol2010","ol2011","ol2013","chromegmailnew","chromeyahoo","appmail9","iphone5s","ipad","android4","androidgmailapp"]
+    }
+}
