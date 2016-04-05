@@ -54,12 +54,38 @@ Run `npm start` to kick off the build process. A new browser tab will open with 
 
 Run `npm run build` to inline your CSS into your HTML along with the rest of the build process.
 
-Run `npm run litmus` to build as above, then submit to litmus for testing.
+Run `npm run litmus` to build as above, then submit to litmus for testing. *AWS S3 Account details required (config.json)*
 
-## A note about Litmus Testing
+Run `npm run zip` to build as above, then zip HTML and images for easy deployment to email marketing services. 
 
-- config file
+## Litmus Tests (config.json)
 
-https://litmus.com/emails/clients.xml
+Testing in Litmus requires the images to be hosted publicly. The provided gulp task handles this by automating hosting to an AWS S3 account. Provide your S3 account details in the `example.config.json` and then rename to `config.json` 
+
+*Caution: AWS Service Fees will result, however, are usually very low do to minimal traffic. Use at your own discretion.*
+
+```json
+{
+    "common": {
+        "subject": "Default Email"
+    },
+    "aws": {
+        "region": "us-east-1",
+        "key": "YOUR_ACCOUNT_KEY",
+        "secret": "YOUR_ACCOUNT_SECRET",
+        "bucket": "elasticbeanstalk-us-east-1-THIS_IS_JUST_AN_EXAMPLE",
+        "url": "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-THIS_IS_JUST_AN_EXAMPLE"
+    },
+    "litmus": {
+        "username": "your@email.com",
+        "password": "YOUR_ACCOUNT_PASSWORD",
+        "url": "https://YOUR_ACCOUNT.litmus.com",
+        "applications": ["ol2003","ol2007","ol2010","ol2011","ol2013","chromegmailnew","chromeyahoo","appmail9","iphone5s","ipad","android4","androidgmailapp"]
+    }
+}
+
+```
+
+For a full list of Litmus' supported test clients(applications) see their [client list](https://litmus.com/emails/clients.xml)
 
 
