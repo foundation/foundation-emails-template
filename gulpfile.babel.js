@@ -74,9 +74,9 @@ function sass() {
 
 // Copy and compress images
 function images() {
-  return gulp.src('src/assets/images/*')
+  return gulp.src('src/assets/img/*')
     .pipe($.imagemin())
-    .pipe(gulp.dest('./dist/images'));
+    .pipe(gulp.dest('./dist/assets/img'));
 }
 
 // Inline CSS and minify HTML
@@ -99,7 +99,7 @@ function watch() {
   gulp.watch('src/pages/**/*.html', gulp.series(pages, inline, browser.reload));
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*'], gulp.series(resetPages, pages, inline, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss'], gulp.series(sass, pages, inline, browser.reload));
-  gulp.watch('src/assets/images/**/*', gulp.series(images, browser.reload));
+  gulp.watch('src/assets/img/**/*', gulp.series(images, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
@@ -138,7 +138,7 @@ function s3() {
     'Cache-Control': 'max-age=315360000, no-transform, public'
   };
 
-  return gulp.src('./dist/images/*')
+  return gulp.src('./dist/assets/img/*')
     // Place images into folder
     .pipe($.rename(function (filePath) {
         filePath.dirname = CONFIG.common.subject +'/'+ filePath.dirname;
@@ -161,7 +161,7 @@ function litmus() {
   var cdnURL = CONFIG.aws.url;
 
   return gulp.src('dist/**/*.html')
-    .pipe($.replace(/=('|")(\/?images)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
+    .pipe($.replace(/=('|")(\/?assets\/img)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
     .pipe($.litmus(CONFIG.litmus));
 }
 
@@ -194,7 +194,7 @@ function zip() {
     var moveImages = gulp.src(sourcePath)
       .pipe($.htmlSrc({ selector: 'img'}))
       .pipe($.rename(function (path) {
-        path.dirname = fileName + '/images';
+        path.dirname = fileName + '/assets/img';
         return path;
       }));
 
