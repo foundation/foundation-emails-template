@@ -11,7 +11,7 @@
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
   "dependencies": {
-    "foundation-emails": "2.0.0"
+    "foundation-emails": "2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -29,7 +29,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "inky": "^1.3.3",
     "lazypipe": "^1.0.1",
-    "panini": "^1.2.0",
+    "panini": "^1.3.0",
     "rimraf": "^2.3.3",
     "siphon-media-query": "^1.0.0",
     "yargs": "^4.1.0"
