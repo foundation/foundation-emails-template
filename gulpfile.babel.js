@@ -10,14 +10,16 @@ import fs       from 'fs';
 import siphon   from 'siphon-media-query';
 import path     from 'path';
 import merge    from 'merge-stream';
+import beep     from 'beepbeep';
+import colors   from 'colors';
 
 const $ = plugins();
 
-// Config file containing s3, litmus and other account info
-const CONFIG = JSON.parse(fs.readFileSync('./config.json'));
-
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
+
+// Declar var so that both AWS and Litmus task can use it.
+var CONFIG;
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
@@ -29,7 +31,7 @@ gulp.task('default',
 
 // Build emails, then send to litmus
 gulp.task('litmus',
-  gulp.series('build', s3, litmus));
+  gulp.series('build', creds, aws, litmus));
 
 // Build emails, then zip
 gulp.task('zip',
@@ -120,30 +122,26 @@ function inliner(css) {
   return pipe();
 }
 
-// Send image assets to S3 for temporary hosting (litmus tests)
-function s3() {
-  // create a new publisher using S3 options
-  // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
-  var publisher = $.awspublish.create({
-    region: CONFIG.aws.region,
-    params: {
-      Bucket: CONFIG.aws.bucket
-    },
-    accessKeyId: CONFIG.aws.key,
-    secretAccessKey: CONFIG.aws.secret
-  });
+// Ensure creds for Litmus are at least there.
+function creds(done) {
+  var configPath = './config.json';
+  try { CONFIG = JSON.parse(fs.readFileSync(configPath)); }
+  catch(e) {
+    beep();
+    console.log('[AWS]'.bold.red + ' Sorry, there was an issue locating your config.json. Please see README.md');
+    process.exit();
+  }
+  done();
+}
 
-  // define custom headers
+// Post images to AWS S3 so they are accessible to Litmus test
+function aws() {
+  var publisher = !!CONFIG.aws ? $.awspublish.create(CONFIG.aws) : $.awspublish.create();
   var headers = {
     'Cache-Control': 'max-age=315360000, no-transform, public'
   };
 
   return gulp.src('./dist/assets/img/*')
-    // Place images into folder
-    .pipe($.rename(function (filePath) {
-        filePath.dirname = CONFIG.common.subject +'/'+ filePath.dirname;
-    }))
-
     // publisher will add Content-Length, Content-Type and headers specified above
     // If not specified it will set x-amz-acl to public-read by default
     .pipe(publisher.publish(headers))
@@ -151,18 +149,18 @@ function s3() {
     // create a cache file to speed up consecutive uploads
     //.pipe(publisher.cache())
 
-     // print upload updates to console
+    // print upload updates to console
     .pipe($.awspublish.reporter());
 }
 
-// Send email to Litmus for testing
+// Send email to Litmus for testing. If no AWS creds then do not replace img urls.
 function litmus() {
-  // Need to replace with email specific URL
-  var cdnURL = CONFIG.aws.url;
+  var awsURL = !!CONFIG && !!CONFIG.aws && !!CONFIG.aws.url ? CONFIG.aws.url : false;
 
   return gulp.src('dist/**/*.html')
-    .pipe($.replace(/=('|")(\/?assets\/img)/g, "=$1"+ cdnURL +"/"+ CONFIG.common.subject))
-    .pipe($.litmus(CONFIG.litmus));
+    .pipe($.if(!!awsURL, $.replace(/=('|")(\/?assets\/img)/g, "=$1"+ awsURL)))
+    .pipe($.litmus(CONFIG.litmus))
+    .pipe(gulp.dest('dist'));
 }
 
 // Copy and compress into Zip
@@ -205,8 +203,5 @@ function zip() {
 
   return merge(moveTasks);
 }
-
-
-
 
 
