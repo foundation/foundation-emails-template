@@ -8,11 +8,18 @@ import lazypipe from 'lazypipe';
 import inky     from 'inky';
 import fs       from 'fs';
 import siphon   from 'siphon-media-query';
+import path     from 'path';
+import merge    from 'merge-stream';
+import beep     from 'beepbeep';
+import colors   from 'colors';
 
 const $ = plugins();
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
+
+// Declar var so that both AWS and Litmus task can use it.
+var CONFIG;
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
@@ -21,6 +28,14 @@ gulp.task('build',
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
   gulp.series('build', server, watch));
+
+// Build emails, then send to litmus
+gulp.task('litmus',
+  gulp.series('build', creds, aws, litmus));
+
+// Build emails, then zip
+gulp.task('zip',
+  gulp.series('build', zip));
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -98,7 +113,7 @@ function inliner(css) {
     .pipe($.inlineCss, {
       applyStyleTags: false
     })
-    .pipe($.injectString.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
+    .pipe($.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
     .pipe($.htmlmin, {
       collapseWhitespace: true,
       minifyCSS: true
@@ -106,3 +121,87 @@ function inliner(css) {
 
   return pipe();
 }
+
+// Ensure creds for Litmus are at least there.
+function creds(done) {
+  var configPath = './config.json';
+  try { CONFIG = JSON.parse(fs.readFileSync(configPath)); }
+  catch(e) {
+    beep();
+    console.log('[AWS]'.bold.red + ' Sorry, there was an issue locating your config.json. Please see README.md');
+    process.exit();
+  }
+  done();
+}
+
+// Post images to AWS S3 so they are accessible to Litmus test
+function aws() {
+  var publisher = !!CONFIG.aws ? $.awspublish.create(CONFIG.aws) : $.awspublish.create();
+  var headers = {
+    'Cache-Control': 'max-age=315360000, no-transform, public'
+  };
+
+  return gulp.src('./dist/assets/img/*')
+    // publisher will add Content-Length, Content-Type and headers specified above
+    // If not specified it will set x-amz-acl to public-read by default
+    .pipe(publisher.publish(headers))
+
+    // create a cache file to speed up consecutive uploads
+    //.pipe(publisher.cache())
+
+    // print upload updates to console
+    .pipe($.awspublish.reporter());
+}
+
+// Send email to Litmus for testing. If no AWS creds then do not replace img urls.
+function litmus() {
+  var awsURL = !!CONFIG && !!CONFIG.aws && !!CONFIG.aws.url ? CONFIG.aws.url : false;
+
+  return gulp.src('dist/**/*.html')
+    .pipe($.if(!!awsURL, $.replace(/=('|")(\/?assets\/img)/g, "=$1"+ awsURL)))
+    .pipe($.litmus(CONFIG.litmus))
+    .pipe(gulp.dest('dist'));
+}
+
+// Copy and compress into Zip
+function zip() {
+  var dist = 'dist';
+  var ext = '.html';
+
+  function getHtmlFiles(dir) {
+    return fs.readdirSync(dir)
+      .filter(function(file) {
+        var fileExt = path.join(dir, file);
+        var isHtml = path.extname(fileExt) == ext;
+        return fs.statSync(fileExt).isFile() && isHtml;
+      });
+  }
+
+  var htmlFiles = getHtmlFiles(dist);
+
+  var moveTasks = htmlFiles.map(function(file){
+    var sourcePath = path.join(dist, file);
+    var fileName = path.basename(sourcePath, ext);
+
+    var moveHTML = gulp.src(sourcePath)
+      .pipe($.rename(function (path) {
+        path.dirname = fileName;
+        return path;
+      }));
+
+    var moveImages = gulp.src(sourcePath)
+      .pipe($.htmlSrc({ selector: 'img'}))
+      .pipe($.rename(function (path) {
+        path.dirname = fileName + '/assets/img';
+        return path;
+      }));
+
+    return merge(moveHTML, moveImages)
+      .pipe($.zip(fileName+ '.zip'))
+      .pipe(gulp.dest('dist'));
+  });
+
+  return merge(moveTasks);
+}
+
+
