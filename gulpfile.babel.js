@@ -76,7 +76,7 @@ function sass() {
 
 // Copy and compress images
 function images() {
-  return gulp.src('src/assets/img/*')
+  return gulp.src('src/assets/img/**/*')
     .pipe($.imagemin())
     .pipe(gulp.dest('./dist/assets/img'));
 }
