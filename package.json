@@ -37,7 +37,7 @@
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-zip": "^3.2.0",
-    "inky": "^1.3.5",
+    "inky": "^1.3.6",
     "lazypipe": "^1.0.1",
     "merge-stream": "^1.0.0",
     "panini": "^1.3.0",
