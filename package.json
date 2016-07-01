@@ -13,7 +13,7 @@
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
   "dependencies": {
-    "foundation-emails": "^2.2.0"
+    "foundation-emails": "^2.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
