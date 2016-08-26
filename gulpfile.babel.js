@@ -65,7 +65,7 @@ function resetPages(done) {
 
 // Compile Sass into CSS
 function sass() {
-  return gulp.src('src/assets/scss/app.scss')
+  return gulp.src('src/assets/scss/app*.scss')
     .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
     .pipe($.sass({
       includePaths: ['node_modules/foundation-emails/scss']
