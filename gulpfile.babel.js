@@ -15,10 +15,38 @@ import colors   from 'colors';
 
 const $ = plugins();
 
+/* Enable/disable prefix workflow - allows for layouts to have different css references
+   but page names prefix must match css file name
+   e.g.  
+   > scss/__invite.scss
+        .invite { background-color:#333333; ... }
+        ...
+
+   > scss/invite.scss
+        @import 'settings';
+        @import 'foundation-emails';
+        @import '_invite';
+        ...
+
+   > layouts/invite.html
+        ...
+        <link rel="stylesheet" type="text/css" href="css/invite.css">
+        ...
+
+   > pages/invite.html, invite2.html, invite_audience1.html
+        ---
+        layout: invite
+        ---
+        ...
+
+   //So all the pages with the prefix "invite" will be inlined with the css from invite.css
+*/
+var PREFIX_WORKFLOW=true;
+
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
 
-// Declar var so that both AWS and Litmus task can use it.
+// Declare var so that both AWS and Litmus task can use it.
 var CONFIG;
 
 // Build the "dist" folder by running all of the above tasks
@@ -65,7 +93,7 @@ function resetPages(done) {
 
 // Compile Sass into CSS
 function sass() {
-  return gulp.src('src/assets/scss/app*.scss')
+  return gulp.src('src/assets/scss/*.scss')
     .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
     .pipe($.sass({
       includePaths: ['node_modules/foundation-emails/scss']
@@ -82,10 +110,24 @@ function images() {
 }
 
 // Inline CSS and minify HTML
-function inline() {
-  return gulp.src('dist/**/*.html')
-    .pipe($.if(PRODUCTION, inliner('dist/css/app.css')))
-    .pipe(gulp.dest('dist'));
+function inline(done) {
+
+  if (PREFIX_WORKFLOW) {
+    var files = fs.readdirSync('./dist/css');
+    var prefix = '';
+    var result = done();
+    for(var i in files) {
+      prefix = files[i].slice(0, -4);
+      result = gulp.src('dist/**/' + prefix + '*.html')
+        .pipe($.if(PRODUCTION, inliner('dist/css/' + prefix + '.css')))
+        .pipe(gulp.dest('dist'));
+    }
+    return result;
+  } else {
+    return gulp.src('dist/**/*.html')
+      .pipe($.if(PRODUCTION, inliner('dist/css/app.css')))
+      .pipe(gulp.dest('dist'));  
+  }
 }
 
 // Start a server with LiveReload to preview the site in
