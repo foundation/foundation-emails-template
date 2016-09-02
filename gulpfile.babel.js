@@ -12,6 +12,7 @@ import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
 import colors   from 'colors';
+import sherpa   from 'style-sherpa'
 
 const $ = plugins();
 
@@ -25,10 +26,6 @@ var CONFIG;
 gulp.task('build',
   gulp.series(clean, pages, sass, images, inline));
 
-// Build emails, run the server, and watch for file changes
-gulp.task('default',
-  gulp.series('build', server, watch));
-
 // Build emails, then send to litmus
 gulp.task('litmus',
   gulp.series('build', creds, aws, litmus));
@@ -37,11 +34,31 @@ gulp.task('litmus',
 gulp.task('zip',
   gulp.series('build', zip));
 
+gulp.task('styleguide', gulp.parallel(copyInkyBrowser, styleGuide));
+
+// Build emails, run the server, and watch for file changes
+gulp.task('default',
+  gulp.series('build', 'styleguide', server, watch));
+
 // Delete the "dist" folder
 // This happens every time a build starts
 function clean(done) {
   rimraf('dist', done);
 }
+
+// Generate a style guide from the Markdown content and HTML template in styleguid e
+function styleGuide(done) {
+  sherpa('src/styleguide/index.md', {
+    output: 'dist/styleguide.html',
+    template: 'src/styleguide/template.html'
+  }, done);
+}
+
+function copyInkyBrowser() {
+  return gulp.src('node_modules/inky/dist/inky-browser.js')
+    .pipe(gulp.dest('dist/assets/js/'));
+}
+
 
 // Compile layouts, pages, and partials into flat HTML files
 // Then parse using Inky templates
@@ -102,6 +119,7 @@ function watch() {
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('change', gulp.series(resetPages, pages, inline, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('change', gulp.series(resetPages, sass, pages, inline, browser.reload));
   gulp.watch('src/assets/img/**/*').on('change', gulp.series(images, browser.reload));
+  gulp.watch('src/styleguide/**').on('all', gulp.series(styleGuide, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
