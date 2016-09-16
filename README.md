@@ -56,6 +56,8 @@ Run `npm run build` to inline your CSS into your HTML along with the rest of the
 
 Run `npm run litmus` to build as above, then submit to litmus for testing. *AWS S3 Account details required (config.json)*
 
+Run `npm run mail` to build as above, then send to specified email address for testing. *SMTP server details required (config.json)*
+
 Run `npm run zip` to build as above, then zip HTML and images for easy deployment to email marketing services. 
 
 ## Litmus Tests (config.json)
@@ -78,6 +80,39 @@ Testing in Litmus requires the images to be hosted publicly. The provided gulp t
     "password": "YOUR_ACCOUNT_PASSWORD",
     "url": "https://YOUR_ACCOUNT.litmus.com",
     "applications": ["ol2003","ol2007","ol2010","ol2011","ol2013","chromegmailnew","chromeyahoo","appmail9","iphone5s","ipad","android4","androidgmailapp"]
+  }
+}
+```
+
+## Manual email tests (config.json)
+
+Similar to the Litmus tests, you can have the emails sent to a specified email address. Just like with the Litmus tests, you will need to provide AWS S3 account details in `config.json`. You will also need to specify to details of an SMTP server.
+
+```json
+{
+  "aws": {
+    "region": "us-east-1",
+    "accessKeyId": "YOUR_ACCOUNT_KEY",
+    "secretAccessKey": "YOUR_ACCOUNT_SECRET",
+    "params": {
+        "Bucket": "elasticbeanstalk-us-east-1-THIS_IS_JUST_AN_EXAMPLE"
+    },
+    "url": "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-THIS_IS_JUST_AN_EXAMPLE"
+  },
+  "mail": {
+    "to": [
+      "example@domain.com"
+    ],
+    "from": "Company name <info@company.com",
+    "smtp": {
+      "auth": {
+        "user": "example@domain.com",
+        "pass": "12345678"
+      },
+      "host": "smtp.domain.com",
+      "secureConnection": true,
+      "port": 465
+    }
   }
 }
 ```
