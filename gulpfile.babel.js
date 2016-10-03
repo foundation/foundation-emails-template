@@ -98,10 +98,10 @@ function server(done) {
 
 // Watch for file changes
 function watch() {
-  gulp.watch('src/pages/**/*.html').on('change', gulp.series(pages, inline, browser.reload));
-  gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('change', gulp.series(resetPages, pages, inline, browser.reload));
-  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('change', gulp.series(resetPages, sass, pages, inline, browser.reload));
-  gulp.watch('src/assets/img/**/*').on('change', gulp.series(images, browser.reload));
+  gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, inline, browser.reload));
+  gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('all', gulp.series(resetPages, pages, inline, browser.reload));
+  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass, pages, inline, browser.reload));
+  gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
 }
 
 // Inlines CSS into HTML, adds media query CSS into the <style> tag of the email, and compresses the HTML
