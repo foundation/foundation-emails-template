@@ -112,7 +112,8 @@ function inliner(css) {
   var pipe = lazypipe()
     .pipe($.inlineCss, {
       applyStyleTags: false,
-      removeStyleTags: false,
+      removeStyleTags: true,
+      preserveMediaQueries: true,
       removeLinkTags: false
     })
     .pipe($.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
