@@ -72,7 +72,7 @@ function sass() {
     }).on('error', $.sass.logError))
     .pipe($.if(PRODUCTION, $.uncss(
       {
-        html: ['dist/*.html']
+        html: ['dist/**/*.html']
       })))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest('dist/css'));
