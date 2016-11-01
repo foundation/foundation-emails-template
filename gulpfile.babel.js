@@ -17,6 +17,7 @@ const $ = plugins();
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
+const EMAIL = yargs.argv.to;
 
 // Declar var so that both AWS and Litmus task can use it.
 var CONFIG;
@@ -32,6 +33,10 @@ gulp.task('default',
 // Build emails, then send to litmus
 gulp.task('litmus',
   gulp.series('build', creds, aws, litmus));
+
+// Build emails, then send to litmus
+gulp.task('mail',
+  gulp.series('build', creds, aws, mail));
 
 // Build emails, then zip
 gulp.task('zip',
@@ -142,7 +147,7 @@ function creds(done) {
   done();
 }
 
-// Post images to AWS S3 so they are accessible to Litmus test
+// Post images to AWS S3 so they are accessible to Litmus and manual test
 function aws() {
   var publisher = !!CONFIG.aws ? $.awspublish.create(CONFIG.aws) : $.awspublish.create();
   var headers = {
@@ -168,6 +173,20 @@ function litmus() {
   return gulp.src('dist/**/*.html')
     .pipe($.if(!!awsURL, $.replace(/=('|")(\/?assets\/img)/g, "=$1"+ awsURL)))
     .pipe($.litmus(CONFIG.litmus))
+    .pipe(gulp.dest('dist'));
+}
+
+// Send email to specified email for testing. If no AWS creds then do not replace img urls.
+function mail() {
+  var awsURL = !!CONFIG && !!CONFIG.aws && !!CONFIG.aws.url ? CONFIG.aws.url : false;
+
+  if (EMAIL) {
+    CONFIG.mail.to = [EMAIL];
+  }
+
+  return gulp.src('dist/**/*.html')
+    .pipe($.if(!!awsURL, $.replace(/=('|")(\/?assets\/img)/g, "=$1"+ awsURL)))
+    .pipe($.mail(CONFIG.mail))
     .pipe(gulp.dest('dist'));
 }
 
@@ -211,5 +230,3 @@ function zip() {
 
   return merge(moveTasks);
 }
-
-

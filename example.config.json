@@ -13,5 +13,20 @@
     "password": "YOUR_ACCOUNT_PASSWORD",
     "url": "https://YOUR_ACCOUNT.litmus.com",
     "applications": ["ol2003","ol2007","ol2010","ol2011","ol2013","chromegmailnew","chromeyahoo","appmail9","iphone5s","ipad","android4","androidgmailapp"]
+  },
+  "mail": {
+    "to": [
+      "example@domain.com"
+    ],
+    "from": "Company name <info@company.com",
+    "smtp": {
+      "auth": {
+        "user": "example@domain.com",
+        "pass": "12345678"
+      },
+      "host": "smtp.domain.com",
+      "secureConnection": true,
+      "port": 465
+    }
   }
 }
