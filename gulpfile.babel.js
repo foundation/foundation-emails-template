@@ -219,7 +219,7 @@ function zip() {
     var moveImages = gulp.src(sourcePath)
       .pipe($.htmlSrc({ selector: 'img'}))
       .pipe($.rename(function (path) {
-        path.dirname = fileName + '/' + path.dirname;
+        path.dirname = fileName + path.dirname.replace('dist', '');
         return path;
       }));
 
