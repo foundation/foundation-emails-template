@@ -120,7 +120,7 @@ function inline(done) {
       prefix = files[i].slice(0, -4);
       result = gulp.src('dist/**/' + prefix + '*.html')
         .pipe($.if(PRODUCTION, inliner('dist/css/' + prefix + '.css')))
-        .pipe($.replace(/<link rel="stylesheet"[^>]*>/, ''))
+        .pipe($.if(PRODUCTION, $.replace(/<link rel="stylesheet"[^>]*>/, '')))
         .pipe(gulp.dest('dist'));
     }
     return result;
