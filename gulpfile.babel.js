@@ -53,6 +53,7 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
+  gulp.series(clean, pages, sass, images, inline, prefixIndex));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -142,6 +143,7 @@ function inline(done) {
 }
 
 //generate list of links to template previews
+function prefixIndex(done) {
 
   if (PREFIX_WORKFLOW && PREFIX_BUILD_INDEX) {
 
