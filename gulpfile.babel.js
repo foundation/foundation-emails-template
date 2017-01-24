@@ -42,6 +42,7 @@ const $ = plugins();
    //So all the pages with the prefix "invite" will be inlined with the css from invite.css
 */
 var PREFIX_WORKFLOW=true;
+var PREFIX_BUILD_INDEX=true; //prefix/true | alpha | false
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
@@ -52,7 +53,6 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build',
-  gulp.series(clean, pages, sass, images, inline));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -139,6 +139,109 @@ function inline(done) {
       .pipe($.replace(/<link rel="stylesheet"[^>]*>/, ''))
       .pipe(gulp.dest('dist'));  
   }
+}
+
+//generate list of links to template previews
+
+  if (PREFIX_WORKFLOW && PREFIX_BUILD_INDEX) {
+
+    var pages = fs.readdirSync('./src/pages');
+    var files = fs.readdirSync('./dist/css');
+    var groups = [];
+    var prefixes = [];
+    var index = [];
+    for(var i in files) {
+      prefix = files[i].slice(0, -4);
+
+      prefixes.push(prefix);
+    }
+
+    var page = '';
+    var prefix = '';
+    var i = null, j = null;
+    for(i in pages) {
+
+      page = pages[i];
+      index.push(page);
+      for (j in prefixes) {
+
+        prefix = prefixes[j];
+
+        if (page.indexOf(prefix) != -1) {
+
+          if (groups[prefix] === undefined) {
+            groups[prefix] = [];
+          }
+          groups[prefix].push(page);
+          break;
+        }
+      }
+    }
+
+    var content = '';
+    content += '<container>';
+    content += '  <row>';
+    content += '    <columns small="12" large="12">';
+
+    switch(PREFIX_BUILD_INDEX) {
+      case 'alpha':
+        i = null, j = null;
+        var title = '';
+        content += '<h2>Index</h2>';
+        content += '<ul>';
+        for(i in index) {
+
+          if (index[i].indexOf('index') == -1) {
+            content += '<li><a href="' + index[i] + '">' + index[i].slice(0, -5) + '</a></li>';
+          }
+        }
+        content += '</ul>';
+        break;
+      case 'prefix':
+      case 'true':
+      case true:
+        i = null, j = null;
+        var title = '';
+        for(i in groups) {
+
+          title = i.replace(/_/g, ' ');
+          title = title.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+          content += '<h2>' + title + '</h2>';
+          content += '<ul>';
+          for (j in groups[i]) {
+            
+            content += '<li><a href="' + groups[i][j] + '">' + groups[i][j].slice(0, -5) + '</a></li>';
+          }
+          content += '</ul>';
+        }
+        break;
+    }
+
+    content += '    </columns>';
+    content += '  </row>';
+    content += '</container>';
+
+    fs.writeFile("./src/pages/index.html", content, function(err) {
+      if(err) {
+        console.log('Error writing index');
+        done();
+      }
+    }); 
+
+    return gulp.src('src/pages/index.html')
+    .pipe(panini({
+      root: 'src/pages',
+      layouts: 'src/layouts',
+      partials: 'src/partials',
+      helpers: 'src/helpers'
+    }))
+    .pipe(inky())
+    .pipe(gulp.dest('dist'));
+
+  } else {
+    done();
+  }
+
 }
 
 // Start a server with LiveReload to preview the site in
