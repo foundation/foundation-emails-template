@@ -223,14 +223,14 @@ function prefixIndex(done) {
     content += '  </row>';
     content += '</container>';
 
-    fs.writeFile("./src/pages/index.html", content, function(err) {
+    fs.writeFile("./src/pages/prefix_index.html", content, function(err) {
       if(err) {
         console.log('Error writing index');
         done();
       }
     }); 
 
-    return gulp.src('src/pages/index.html')
+    return gulp.src('src/pages/prefix_index.html')
     .pipe(panini({
       root: 'src/pages',
       layouts: 'src/layouts',
@@ -249,7 +249,10 @@ function prefixIndex(done) {
 // Start a server with LiveReload to preview the site in
 function server(done) {
   browser.init({
-    server: 'dist'
+    server: {
+      baseDir: 'dist',
+      index: (PREFIX_BUILD_INDEX != false) ? "prefix_index.html" : "index.html"
+    }
   });
   done();
 }
