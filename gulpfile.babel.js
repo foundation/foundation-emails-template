@@ -22,7 +22,7 @@ const EMAIL = yargs.argv.to;
 // Declar var so that both AWS and Litmus task can use it.
 var CONFIG;
 
-// Build the "dist" folder by running all of the above tasks
+// Build the "dist" folder by running all of the below tasks
 gulp.task('build',
   gulp.series(clean, pages, sass, images, inline));
 
