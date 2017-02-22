@@ -4,7 +4,7 @@
  * @example
  * {{{ruler color="#ec6225" width="60px" height="3px" spacing="15px"}}}
  * 
- * Attribute Options
+ * @Attribute Options
  * color: Must be hex color value
  * width: Can be percentage (50%) or pixel (50px) unit
  * height: Defaults to pixel unit
