@@ -44,9 +44,5 @@
     "rimraf": "^2.3.3",
     "siphon-media-query": "^1.0.0",
     "yargs": "^4.1.0"
-  },
-  "babel": {
-    "presets": ["es2015"]
   }
-
 }
