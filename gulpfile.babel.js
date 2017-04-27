@@ -51,7 +51,7 @@ function clean(done) {
 // Compile layouts, pages, and partials into flat HTML files
 // Then parse using Inky templates
 function pages() {
-  return gulp.src('src/pages/**/*.html')
+  return gulp.src(['src/pages/**/*.html', '!src/pages/archive/**/*.html'])
     .pipe(panini({
       root: 'src/pages',
       layouts: 'src/layouts',
@@ -85,7 +85,7 @@ function sass() {
 
 // Copy and compress images
 function images() {
-  return gulp.src('src/assets/img/**/*')
+  return gulp.src(['src/assets/img/**/*', '!src/assets/img/archive/**/*'])
     .pipe($.imagemin())
     .pipe(gulp.dest('./dist/assets/img'));
 }
