@@ -12,6 +12,8 @@ import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
 import colors   from 'colors';
+import inject   from 'gulp-inject';
+
 
 const $ = plugins();
 
@@ -24,7 +26,7 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the below tasks
 gulp.task('build',
-  gulp.series(clean, pages, sass, images, inline));
+  gulp.series(clean, pages, sass, images, inline, injector));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -97,6 +99,21 @@ function inline() {
     .pipe(gulp.dest('dist'));
 }
 
+// Inject HTML after inlining
+function injector() {
+  return gulp.src('dist/**/*.html')
+  .pipe(inject(gulp.src(['src/extras/*.html']), {
+    starttag: '<!-- inject:extras -->',
+    relative: true,
+    transform: function (filePath, file) {
+      // return file contents as string 
+      return file.contents.toString('utf8')
+    }
+  }))
+  .pipe(gulp.dest('dist'));
+
+}
+
 // Start a server with LiveReload to preview the site in
 function server(done) {
   browser.init({
@@ -107,9 +124,9 @@ function server(done) {
 
 // Watch for file changes
 function watch() {
-  gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, inline, browser.reload));
-  gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('all', gulp.series(resetPages, pages, inline, browser.reload));
-  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass, pages, inline, browser.reload));
+  gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, inline, injector, browser.reload));
+  gulp.watch(['src/layouts/**/*', 'src/partials/**/*', , 'src/extras/**/*']).on('all', gulp.series(resetPages, pages, inline, injector, browser.reload));
+  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass, pages, inline, injector, browser.reload));
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
 }
 
