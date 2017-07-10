@@ -1,0 +1,22 @@
+- html: basic.html
+  name: Basic Template
+- html: drip.html
+  name: Drip Template
+- html: hero.html
+  name: Hero Template
+- html: marketing.html
+  name: Marketing Template
+- html: newsletter.html
+  name: Newsletter Template
+- html: newsletter-2.html
+  name: Newsletter 2 Template
+- html: order.html
+  name: Order Template Template
+- html: password.html
+  name: Password Template
+- html: sidebar.html
+  name: Sidebar Template
+- html: sidebar-hero.html
+  name: Sidebar Hero Template
+- html: welcome.html
+  name: Welcome Template
