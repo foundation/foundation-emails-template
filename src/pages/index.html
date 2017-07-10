@@ -8,7 +8,7 @@ subject: My Email Templates
 <container>
 
   <spacer size="24"></spacer>
-  
+
   <row>
     <columns small="12">
 
@@ -19,17 +19,9 @@ subject: My Email Templates
 
     <center>
       <menu class="vertical">
-        <item href="{{root}}basic.html" target="_blank">Basic Template</item>
-        <item href="{{root}}drip.html" target="_blank">Drip Template</item>
-        <item href="{{root}}hero.html" target="_blank">Hero Template</item>
-        <item href="{{root}}marketing.html" target="_blank">Marketing Template</item>
-        <item href="{{root}}newsletter.html" target="_blank">Newsletter Template</item>
-        <item href="{{root}}newsletter-2.html" target="_blank">Newsletter 2 Template</item>
-        <item href="{{root}}order.html" target="_blank">Order Template</item>
-        <item href="{{root}}password.html" target="_blank">Password Template</item>
-        <item href="{{root}}sidebar.html" target="_blank">Sidebar Template</item>
-        <item href="{{root}}sidebar-hero.html" target="_blank">Sidebar Hero Template</item>
-        <item href="{{root}}welcome.html" target="_blank">Welcome Template</item>
+        {{#each templates}}
+          <item href="{{root}}{{this.html}}" target="_blank">{{this.name}}</item>
+        {{/each}}
       </menu>
     </center>
 
@@ -52,4 +44,3 @@ subject: My Email Templates
 </center>
 
 <spacer size="16"></spacer>
-
