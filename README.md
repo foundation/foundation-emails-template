@@ -1,3 +1,5 @@
+# Внесем кое-какие свои изменения.. так, чисто для прикола ради
+
 # Foundation for Emails Template
 
 [![devDependency Status](https://david-dm.org/zurb/foundation-emails-template/dev-status.svg)](https://david-dm.org/zurb/foundation-emails-template#info=devDependencies)
