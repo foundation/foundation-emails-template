@@ -1,0 +1,56 @@
+<!-- <#if sectie?has_content && sectie != "geen"> -->
+<row class="sectie">
+	<columns large="3" valign="middle">
+		<a href="${buttonurl!}">
+			<h2 class="text-center fallbackfont">${titel!}</h2>
+		</a>
+  </columns>
+</row>
+<!-- </#if> -->
+<!-- <#if positieafbeelding == "top"> -->
+<row class="collapse banner">
+	<columns small="12">
+		<a href="${buttonurl!}">
+			<img src="{bannerimage600x200.url!}" alt="">
+		</a>
+	</columns>
+</row>
+<row class="border-bottom">
+	<columns small="12">
+	<spacer size="15"></spacer>
+		<a href="${buttonurl!}">
+			<h2 class="text-center fallbackfont">${titel!}</h2>
+		</a>
+		<p class="omschrijving fallbackfont">${artikeltekst!}</p>
+		<button href="${buttonurl!}" class="radius fallbackfont">${buttontekst!}</button>
+	</columns>
+</row>
+<!-- <#elseif positieafbeelding != "top"> -->
+<row class="border-bottom">
+	<!-- <#if positieafbeelding == "right"> -->
+	<columns small="12" large="6" class="padding-leftright">
+		<spacer size="15"></spacer>
+		<a href="${buttonurl!}">
+			<h2 class="text-center fallbackfont">${titel!}</h2>
+		</a>
+		<p class="omschrijving fallbackfont">${artikeltekst!}</p>
+		<button href="${buttonurl!}" class="radius fallbackfont">${buttontekst!}</button>
+	</columns>
+	<columns small="12" large="6" class="nopadding-all">
+		<img src="http://via.placeholder.com/500x500" alt="">
+	</columns>
+	<!-- <#elseif positieafbeelding == "left"> -->
+	<columns small="12" large="6" class="nopadding-all">
+		<img src="http://via.placeholder.com/500x500" alt="">
+	</columns>
+	<columns small="12" large="6">
+		<spacer size="15"></spacer>
+		<a href="${buttonurl!}">
+			<h2 class="text-center fallbackfont">${titel!}</h2>
+		</a>
+		<p class="omschrijving fallbackfont">${artikeltekst!}</p>
+		<button href="${buttonurl!}" class="radius fallbackfont">${buttontekst!}</button>
+	</columns>
+	<!-- </#if> -->
+</row>
+<!-- </#if> -->

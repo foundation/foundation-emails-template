@@ -1,0 +1,17 @@
+<row class="collapse banner">
+	<columns small="12">
+		<!-- <#if bannerurl?has_content> -->
+		<a href="<#noparse>${current_landcode.url}</#noparse>${bannerurl!}" target="_blank">
+		<!-- </#if> -->
+			<img class="show-for-large" src="${bannerimage600x200.url!}" title="${banneromschrijving!}" alt="${banneromschrijving!}" width="600" height="${bannerimage600x200.height!}">
+			<!--[if !mso]> -->
+			<img class="hide-for-large" src="${bannerimage338x200.url!}" title="${banneromschrijving!}" alt="${banneromschrijving!}" width="338" height="${bannerimage338x200.height!}">
+			<!--<![endif]-->
+		<!-- <#if bannerurl?has_content> -->
+		</a>
+		<!-- </#if> -->
+		<!-- <#if padding_bottom == "ja"> -->
+		<spacer size="15"></spacer>
+		<!-- </#if> -->
+	</columns>
+</row>
