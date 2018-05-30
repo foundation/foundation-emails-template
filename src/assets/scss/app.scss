@@ -84,18 +84,24 @@ td.large-4, th.large-4, td.large-6, th.large-6{padding-left: 15px; padding-right
 			padding: 0px 0px!important;
 			width: 20%;
 			a{
-				font-size: $global-font-size * 0.75;
 				text-transform: uppercase;
 				color: #333;
 				img{
 					width: 24px;
 					height: 24px;
+					padding-bottom: 10px;
 					@media only screen and (max-width: 600px) {
-						padding: 0px!important;
+						padding-bottom: 0px!important;
 					}
 				}
+				p{
+					font-size: $global-font-size * 0.75;
+					width: 100%;
+					display: block;
+					margin-bottom: 0;
+				}
 			}
-		} 
+		}
 	}
 }
 
@@ -153,7 +159,7 @@ td.large-4, th.large-4, td.large-6, th.large-6{padding-left: 15px; padding-right
 .banner{
 	td, th{
 		padding-bottom: 0px;
-	}	
+	}
 }
 
 // FOOTER
@@ -178,6 +184,14 @@ td.large-4, th.large-4, td.large-6, th.large-6{padding-left: 15px; padding-right
 	}
 }
 
+// ENQUETE
+.enquete{
+	background-color: $medium-gray;
+	border: 5px solid $primary-color;
+	border-style: inset;
+	padding: $global-padding 0px;
+}
+
 // GROOTHANDEL
 .groothandel{
 	background-color: $medium-gray;
@@ -195,13 +209,13 @@ td.large-4, th.large-4, td.large-6, th.large-6{padding-left: 15px; padding-right
 	}
 }
 
-// BUTTONS
-table.button{
-	float: right;
-	table td{
-		text-align: center;
-	}
-	@media only screen and (max-width: 600px) {
-		width: 100%;
-	}
-}
+// // BUTTONS
+// table.button{
+// 	// float: right;
+// 	table td{
+// 		text-align: center;
+// 	}
+// 	@media only screen and (max-width: 600px) {
+// 		width: 100%;
+// 	}
+// }

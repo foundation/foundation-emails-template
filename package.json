@@ -17,9 +17,9 @@
     "foundation-emails": "^2.2.1"
   },
   "devDependencies": {
-    "babel-core": "^6.3.26",
+    "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.3.13",
-    "babel-register": "^6.7.2",
+    "babel-register": "^6.26.0",
     "beepbeep": "^1.2.0",
     "browser-sync": "^2.11.0",
     "colors": "^1.1.2",
