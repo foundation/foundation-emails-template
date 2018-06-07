@@ -1,0 +1,47 @@
+<row class="border-bottom">
+	<columns small="12" large="6" class="actie">
+		<a href="${url_blok1!}" target="_blank" title="${producttitel_blok1!}">
+			<img src="${productafbeelding_blok1.url!}" alt="${producttitel_blok1!}" width="269" height="269">
+		</a>
+	</columns>
+	<columns small="12" large="6" class="actie">
+		<row>
+			<columns small="12">
+				<a href="${url_blok1!}" target="_blank" title="${producttitel_blok1!}">
+					<h3 class="fallbackfont">${producttitel_blok1!}</h3>
+				</a>
+				<p class="fallbackfont">${productomschrijving_blok1!}</p>
+			</columns>
+		</row>
+		<!-- <#if assortimentbuttons == "ja"> -->
+		<spacer size="85" class="show-for-large"></spacer>
+		<!-- <#else> -->
+		<spacer size="139" class="show-for-large"></spacer>
+		<!-- </#if> -->
+		<row>
+			<columns small="5">
+				<p class="fallbackfont eenheid">${eenheid_blok1!}</p>
+				<!-- <#if vanprijs_blok1?has_content> -->
+				<!-- <#if vanprijs_blok1 != "van" || vanprijs_blok1 != "vanaf" || vanprijs_blok1 != "nu">  -->
+				<span class="linethrough">
+				<!-- </#if> -->
+					<p class="fallbackfont vanprijs">${vanprijs_blok1!}</p>
+				<!-- <#if vanprijs_blok1 != "van" || vanprijs_blok1 != "vanaf" || vanprijs_blok1 != "nu">  -->
+				</span>
+				<!-- </#if> -->
+				<!-- </#if> -->
+			</columns>
+			<columns small="7">
+				<p class="fallbackfont voorprijs text-right">${voorprijs_blok1!}</p>
+			</columns>
+		</row>
+		<!-- <#if assortimentbuttons == "ja"> -->
+		<row>
+			<columns>
+				<spacer size="15"></spacer>
+				<button class="fallbackfont radius expanded" href="${alle_acties_url_blok1!}" target="_blank">${alle_acties_blok1!}</button>
+			</columns>
+		</row>
+		<!-- </#if> -->
+	</columns>
+</row>

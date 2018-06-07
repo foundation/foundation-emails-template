@@ -1,4 +1,221 @@
 @import 'settings';
 @import 'foundation-emails';
 
-@import 'template/template';
+// GLOBAL
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+a, a:visited,a:active,a:hover,a:focus{color:#333;}
+
+.padding-top{padding-top: 15px;}
+.padding-bottom{padding-bottom: 15px;}
+.padding-left{padding-left: 15px;}
+.padding-right{padding-right: 15px;}
+.padding-topbottom{padding-top: 15px; padding-bottom: 15px;}
+.padding-leftright{padding-left: 15px; padding-right: 15px;}
+.padding-all{padding: 15px 15px 15px 15px!important;}
+
+.nopadding-top{padding-top: 0;}
+.nopadding-bottom{padding-bottom: 0;}
+.nopadding-left{padding-left: 0;}
+.nopadding-right{padding-right: 0;}
+.nopadding-topbottom{padding-top: 0; padding-bottom: 0;}
+.nopadding-leftright{padding-left: 0; padding-right: 0;}
+.nopadding-all{padding: 0px 0px 0px 0px!important;}
+
+@media only screen and (max-width: 600px){
+	th.nopadding-all.small-12.large-6.columns.first{
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+}
+
+.wrapper-inner{padding: 15px 15px 0;}
+td.large-4, th.large-4, td.large-6, th.large-6{padding-left: 15px; padding-right: 15px;}
+
+.border-top{border-top: 1px solid #ccc;}
+.border-right{border-right: 1px solid #ccc;}
+.border-right-hide{border-right: 1px solid #fff;}
+.border-right-hide-mobile{
+	@media only screen and (max-width: 600px){
+		border-right: 1px solid #fff!important;
+	}
+}
+.border-bottom{border-bottom: 1px solid #ccc;}
+.border-bottom-mobile{
+	@media only screen and (max-width: 600px){
+		border-bottom: 1px solid #ccc;
+	}
+}
+.border-left{border-left: 1px solid #ccc;}
+
+// SNIPPET
+.snippet{
+	.columns{
+		padding: 15px 0px;
+		span{
+			font-size: $global-font-size * 0.8571428571;
+		}
+	}
+}
+
+// HEADER
+.header{
+	background-color: $medium-gray;
+	border-top: 5px solid $primary-color;
+	.logo{
+		max-width: 148px;
+	}
+	.datum{
+		font-size: $global-font-size * 0.875;
+		margin-bottom:0px;
+	}
+}
+
+// MENU
+.header-menu{
+	border-bottom: 1px solid #ccc;
+	.columns{
+		td, th{
+			@media only screen and (max-width: 600px) {
+				display: table-cell !important;
+			}
+		}
+		.menu-item{
+			padding: 0px 0px!important;
+			width: 20%;
+			a{
+				text-transform: uppercase;
+				color: #333;
+				img{
+					width: 24px;
+					height: 24px;
+					padding-bottom: 10px;
+					@media only screen and (max-width: 600px) {
+						padding-bottom: 0px!important;
+					}
+				}
+				p{
+					font-size: $global-font-size * 0.75;
+					width: 100%;
+					display: block;
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+.hoofdartikel{
+	background-color: $medium-gray;
+	h2{
+		font-size: $h2-font-size * 1.5;
+		// text-transform: uppercase;
+	}
+}
+
+.actie{
+	padding: $global-padding 0px;
+	.columns, .eenheid, .vanprijs, .voorprijs{
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+	}
+	p{margin:0;}
+	a{color: $black;}
+	span.linethrough {
+		text-decoration: line-through;
+		color: #f00;
+	}
+	.voorprijs{
+		font-size: 25px;
+		font-weight: 700;
+		line-height: 1;
+		color: $action-price;
+		@media only screen and (max-width: 600px) {
+			font-size: 21px;
+			line-height: 21px;
+		}
+	}
+	.vanprijs{
+		color: #333;
+	}
+}
+
+// SECTIE
+.sectie{
+	height: 100px;
+	background-color: $primary-color;
+	padding-bottom: 0;
+	th.columns{
+		padding-bottom: 0;
+	}
+	h2{
+		color: $white;
+		margin: 0;
+		text-transform: uppercase;
+	}
+}
+
+// BANNER
+.banner{
+	td, th{
+		padding-bottom: 0px;
+	}
+}
+
+// FOOTER
+.footer-menu{
+	.columns{
+		td, th{
+			@media only screen and (max-width: 600px) {
+				display: table-cell !important;
+			}
+		}
+		.menu-item{
+			a{
+				img{
+					width: 40px;
+					height: 40px;
+					@media only screen and (max-width: 600px) {
+						padding: 0px;
+					}
+				}
+			}
+		}
+	}
+}
+
+// ENQUETE
+.enquete{
+	background-color: $medium-gray;
+	border: 5px solid $primary-color;
+	border-style: inset;
+	padding: $global-padding 0px;
+}
+
+// GROOTHANDEL
+.groothandel{
+	background-color: $medium-gray;
+	padding: $global-padding 0px;
+	.columns{
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+		h4{
+			padding-left: 30px;
+			background: url(http://td42.tripolis.com/public/image_+BC7G32YbxnDk_g+PYUBmg.png) no-repeat;
+			background-size: 17px 24px;
+			line-height: 1;
+		}
+		p{margin-bottom: 0px;}
+	}
+}
+
+// // BUTTONS
+// table.button{
+// 	// float: right;
+// 	table td{
+// 		text-align: center;
+// 	}
+// 	@media only screen and (max-width: 600px) {
+// 		width: 100%;
+// 	}
+// }

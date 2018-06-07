@@ -1,0 +1,23 @@
+<row class="collapse banner">
+	<columns small="12">
+		<!-- <#if hoofdartikel_url?has_content> -->
+		<a href="${hoofdartikel_url!}" target="_blank">
+		<!-- </#if> -->
+			<img class="show-for-large" src="${bannerimage600x200.url!}" title="${banneromschrijving!}" alt="${banneromschrijving!}" width="600" height="200">
+			<!--[if !mso]> -->
+			<img class="hide-for-large" src="${bannerimage338x200.url!}" title="${banneromschrijving!}" alt="${banneromschrijving!}" width="338" height="200">
+			<!--<![endif]-->
+		<!-- <#if hoofdartikel_url?has_content> -->
+		</a>
+		<!-- </#if> -->
+	</columns>
+</row>
+<row class="hoofdartikel">
+	<columns small="12" class="padding-top">
+		<h3 class="fallbackfont">${titel!}</h3>
+		<p class="fallbackfont">${artikeltekst!}</p>
+		<!-- <#if hoofdartikel_url?has_content> -->
+		<button href="${hoofdartikel_url!}" class="radius fallbackfont">${buttontekst!}</button>
+		<!-- </#if> -->
+	</columns>
+</row>

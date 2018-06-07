@@ -1,0 +1,202 @@
+<!--
+<#noparse>
+	<#assign vestigingen =
+	{
+		"3": {
+			"naam": "HANOS Heerlen",
+			"straat": "Heerlerweg 158",
+			"postcode": "6433 HX",
+			"plaats" : "Heerlen",
+			"telefoonnummer": "+31 45 5632360",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Heerlen"
+		},
+		"4": {
+			"naam": "HANOS Heerlen",
+			"straat": "Heerlerweg 158",
+			"postcode": "6433 HX",
+			"plaats" : "Heerlen",
+			"telefoonnummer": "+31 45 5632360",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Heerlen"
+		},		
+		"5": {
+			"naam": "HANOS Valkenburg",
+			"straat": "Beekstraat 13-15",
+			"postcode": "6301 HV",
+			"plaats" : "Valkenburg",
+			"telefoonnummer": "+31 43 6040642",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Valkenburg"
+		},
+		"6": {
+			"naam": "HANOS Doetinchem",
+			"straat": "Wijnbergseweg 37",
+			"postcode": "7006 AH",
+			"plaats" : "Doetinchem",
+			"telefoonnummer": "+31 314 344434",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Doetinchem"
+		},		
+		"7": {
+			"naam": "HANOS Groningen",
+			"straat": "Bornholmstraat 56",
+			"postcode": "9723 AZ",
+			"plaats" : "Groningen",
+			"telefoonnummer": "+31 50 5973600",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Groningen"
+		},
+		"8": {
+			"naam": "HANOS Heerenveen",
+			"straat": "Houtdraaier 2",
+			"postcode": "8447 GG",
+			"plaats" : "Heerenveen",
+			"telefoonnummer": "+31 513 630303",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Heerenveen"
+		},
+		"9": {
+			"naam": "HANOS Texel",
+			"straat": "Vlamkast 20",
+			"postcode": "1792 CR",
+			"plaats" : "Oudeschild",
+			"telefoonnummer": "+31 222 312669",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Texel"
+		},
+		"10": {
+			"naam": "HANOS Eindhoven",
+			"straat": "Hurksestraat 19A",
+			"postcode": "5662 AH",
+			"plaats" : "Eindhoven",
+			"telefoonnummer": "+31 40 2925200",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Eindhoven"
+		},
+		"11": {
+			"naam": "HANOS-ISPC Breda",
+			"straat": "Kalshoven 25",
+			"postcode": "4825 AL",
+			"plaats" : "Breda",
+			"telefoonnummer": "+31 76 5726726",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-ISPC-Breda"
+		},
+		"12": {
+			"naam": "HANOS-ISPC Utrecht",
+			"straat": "Ravenswade 94",
+			"postcode": "3439 LD",
+			"plaats" : "Nieuwegein",
+			"telefoonnummer": "+31 30 2808500",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-ISPC-Utrecht"
+		},
+		"14": {
+			"naam": "HGC-HANOS Antwerpen",
+			"straat": "Nijverheidsstraat 54E",
+			"postcode": "2160",
+			"plaats" : "Wommelgem",
+			"telefoonnummer": "+32 36 084141",
+			"href": "https://www.hanos.be/nl/groothandel/HGC-HANOS-Antwerpen"
+		},
+		"15": {
+			"naam": "HGC-HANOS Hasselt",
+			"straat": "Herkenrodesingel 81",
+			"postcode": "3500",
+			"plaats" : "Hasselt",
+			"telefoonnummer": "+32 11 246767",
+			"href": "https://www.hanos.be/nl/groothandel/HGC-HANOS-Hasselt"
+		},
+		"16": {
+			"naam": "HANOS Apeldoorn",
+			"straat": "Stadhoudersmolenweg 41",
+			"postcode": "7317 AW",
+			"plaats" : "Apeldoorn",
+			"telefoonnummer": "+31 55 5294444",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Apeldoorn"
+		},		
+		"17": {
+			"naam": "HANOS Zwolle",
+			"straat": "Schokkerweg 9",
+			"postcode": "8042 PC",
+			"plaats" : "Zwolle",
+			"telefoonnummer": "+31 38 4256825",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Zwolle"
+		},		
+		"18": {
+			"naam": "HANOS Nijmegen",
+			"straat": "Energieweg 84",
+			"postcode": "6541 CZ",
+			"plaats" : "Nijmegen",
+			"telefoonnummer": "+31 24 3717999",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Nijmegen"
+		},		
+		"19": {
+			"naam": "HANOS Venlo",
+			"straat": "Winkelveldstraat 17",
+			"postcode": "5916 NX",
+			"plaats" : "Venlo",
+			"telefoonnummer": "+31 77 3551212",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Venlo"
+		},
+		"20": {
+			"naam": "HANOS Amsterdam",
+			"straat": "Spaklerweg 51-55",
+			"postcode": "1114 AE",
+			"plaats" : "Amsterdam",
+			"telefoonnummer": "+31 20 4609999",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Amsterdam"
+		},		
+		"21": {
+			"naam": "HANOS Amsterdam",
+			"straat": "Spaklerweg 51-55",
+			"postcode": "1114 AE",
+			"plaats" : "Amsterdam",
+			"telefoonnummer": "+31 20 4609999",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Amsterdam"
+		},		
+		"22": {
+			"naam": "HANOS Haarlem",
+			"straat": "Nijverheidsweg 27c",
+			"postcode": "2031 CN",
+			"plaats" : "Haarlem",
+			"telefoonnummer": "+31 23 5344244",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Haarlem"
+		},		
+		"32": {
+			"naam": "HANOS Ameland",
+			"straat": "Achterdijken 22",
+			"postcode": "9163 JV",
+			"plaats" : "Nes Ameland",
+			"telefoonnummer": "+31 519 542292",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Ameland"
+		},		
+		"33": {
+			"naam": "HANOS Den Haag-Delft",
+			"straat": "Kleveringweg 57",
+			"postcode": "2616 LZ",
+			"plaats" : "Delft",
+			"telefoonnummer": "+31 15 8000400",
+			"href": "https://www.hanos.nl/nl/groothandel/HANOS-Denhaag-Delft"
+		},		
+		"unknown": {
+			"naam": "HANOS Nederland",
+			"straat": "Stadhoudersmolenweg 37",
+			"postcode": "7317 AW",
+			"plaats" : "Apeldoorn",
+			"telefoonnummer": "+31 55 5294646",
+			"href": "https://www.hanos.nl/nl/groothandels"
+		}
+	} >
+	<#assign current_vestiging = vestigingen[contact.gebied]!vestigingen["unknown"]	>			
+-->
+
+<row>
+	<columns small="12" large="12" class="groothandel">
+		<row>
+			<columns small="12">
+				<h4 class="fallbackfont">${current_vestiging.naam}</h4>
+			</columns>
+		</row>
+		<row>
+			<columns small="12" large="7">
+				<p class="fallbackfont">${current_vestiging.straat}<br>${current_vestiging.postcode} ${current_vestiging.plaats}<br><a href="tel:${current_vestiging.telefoonnummer?replace(' ', '')}">${current_vestiging.telefoonnummer}</a></p>
+				<spacer size="15" class="hide-for-large"></spacer>
+			</columns>
+			<columns small="12" large="5">
+				<button class="radius expanded fallbackfont" href="${current_vestiging.href}">Route en openingstijden</button>
+			</columns>
+		</row>
+	</columns>
+</row>
