@@ -2,7 +2,7 @@ import gulp     from 'gulp';
 import plugins  from 'gulp-load-plugins';
 import browser  from 'browser-sync';
 import rimraf   from 'rimraf';
-import panini   from 'panini';
+import panini   from 'panini/gulp';
 import yargs    from 'yargs';
 import lazypipe from 'lazypipe';
 import inky     from 'inky';
@@ -48,23 +48,23 @@ function clean(done) {
   rimraf('dist', done);
 }
 
+// Panini istance to be shared between `pages()` and `resetPages()` to watch for new files
+let _paniniInst = null;
+
 // Compile layouts, pages, and partials into flat HTML files
 // Then parse using Inky templates
 function pages() {
-  return gulp.src(['src/pages/**/*.html', '!src/pages/archive/**/*.html'])
-    .pipe(panini({
-      root: 'src/pages',
-      layouts: 'src/layouts',
-      partials: 'src/partials',
-      helpers: 'src/helpers'
-    }))
+  const stream = panini('src');
+  _paniniInst = stream._panini;
+
+  return stream
     .pipe(inky())
     .pipe(gulp.dest('dist'));
 }
 
 // Reset Panini's cache of layouts and partials
 function resetPages(done) {
-  panini.refresh();
+  _paniniInst && _paniniInst.refresh();
   done();
 }
 
