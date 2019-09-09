@@ -12,6 +12,7 @@ import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
 import colors   from 'colors';
+import markdown from 'gulp-markdown';
 
 const $ = plugins();
 
@@ -24,7 +25,7 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the below tasks
 gulp.task('build',
-  gulp.series(clean, pages, sass, images, inline));
+  gulp.series(clean, cmarkdown, pages, sass, images, inline));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -68,6 +69,13 @@ function resetPages(done) {
   done();
 }
 
+//Render markdown
+function cmarkdown() {
+  return gulp.src('src/markdown/*.md')
+    .pipe(markdown())
+    .pipe(gulp.dest('src/pages'));
+}
+
 // Compile Sass into CSS
 function sass() {
   return gulp.src('src/assets/scss/app.scss')
@@ -107,6 +115,7 @@ function server(done) {
 
 // Watch for file changes
 function watch() {
+  gulp.watch('src/markdown/*.md').on('all', gulp.series(cmarkdown));
   gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, inline, browser.reload));
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('all', gulp.series(resetPages, pages, inline, browser.reload));
   gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass, pages, inline, browser.reload));

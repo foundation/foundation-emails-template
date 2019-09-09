@@ -23,7 +23,7 @@
     "beepbeep": "^1.2.0",
     "browser-sync": "^2.11.0",
     "colors": "^1.1.2",
-    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
+    "gulp": "git+https://github.com/gulpjs/gulp#v4.0.0",
     "gulp-awspublish": "^3.0.1",
     "gulp-cli": "^1.1.0",
     "gulp-html-src": "^1.0.0",
@@ -46,7 +46,8 @@
     "panini": "^1.3.0",
     "rimraf": "^2.3.3",
     "siphon-media-query": "^1.0.0",
-    "yargs": "^4.1.0"
+    "yargs": "^4.1.0",
+    "gulp-markdown": "^4.0.0"
   },
   "babel": {
     "presets": [
