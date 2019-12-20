@@ -218,9 +218,9 @@ function zip() {
 
     var moveImages = gulp.src(sourcePath)
       .pipe($.htmlSrc({ selector: 'img'}))
-      .pipe($.rename(function (path) {
-        path.dirname = fileName + path.dirname.replace('dist', '');
-        return path;
+      .pipe($.rename(function (currentpath) {
+        currentpath.dirname = path.join(fileName, currentpath.dirname.replace('dist', ''));
+        return currentpath;
       }));
 
     return merge(moveHTML, moveImages)
