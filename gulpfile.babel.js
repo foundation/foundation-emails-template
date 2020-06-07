@@ -11,7 +11,8 @@ import siphon   from 'siphon-media-query';
 import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
-import colors   from 'colors';
+
+const sass = require('gulp-sass')(require('sass'));
 
 const $ = plugins();
 
@@ -24,7 +25,7 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the below tasks
 gulp.task('build',
-  gulp.series(clean, pages, sass, images, inline));
+  gulp.series(clean, pages, sass2css, images, inline));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -69,12 +70,12 @@ function resetPages(done) {
 }
 
 // Compile Sass into CSS
-function sass() {
+function sass2css() {
   return gulp.src('src/assets/scss/app.scss')
     .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
-    .pipe($.sass({
+    .pipe(sass({
       includePaths: ['node_modules/foundation-emails/scss']
-    }).on('error', $.sass.logError))
+    }).on('error', sass.logError))
     .pipe($.if(PRODUCTION, $.uncss(
       {
         html: ['dist/**/*.html']
@@ -109,7 +110,7 @@ function server(done) {
 function watch() {
   gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, inline, browser.reload));
   gulp.watch(['src/layouts/**/*', 'src/partials/**/*']).on('all', gulp.series(resetPages, pages, inline, browser.reload));
-  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass, pages, inline, browser.reload));
+  gulp.watch(['../scss/**/*.scss', 'src/assets/scss/**/*.scss']).on('all', gulp.series(resetPages, sass2css, pages, inline, browser.reload));
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
 }
 
