@@ -4,13 +4,6 @@
   "description": "Basic template for a Foundation for Emails project.",
   "repository": "zurb/foundation-emails-template",
   "main": "gulpfile.babel.js",
-  "scripts": {
-    "start": "gulp",
-    "build": "gulp --production",
-    "zip": "gulp zip --production",
-    "litmus": "gulp litmus --production",
-    "mail": "gulp mail --production"
-  },
   "author": "ZURB <foundation@zurb.com>",
   "license": "MIT",
   "dependencies": {
@@ -52,5 +45,12 @@
     "presets": [
       "es2015"
     ]
+  },
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp --production",
+    "zip": "gulp zip --production",
+    "litmus": "gulp litmus --production",
+    "mail": "gulp mail --production"
   }
 }
