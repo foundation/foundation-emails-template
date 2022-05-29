@@ -20,6 +20,7 @@ dartSass.compiler = require('sass');
 // Look for the --production flag
 const PRODUCTION = !!yargs.argv.production;
 const EMAIL = yargs.argv.to;
+const TEMP = yargs.argv.temp;
 
 // Declar var so that both AWS and Litmus task can use it.
 var CONFIG;
@@ -172,7 +173,13 @@ function aws() {
 function litmus() {
   var awsURL = !!CONFIG && !!CONFIG.aws && !!CONFIG.aws.url ? CONFIG.aws.url : false;
 
-  return gulp.src('dist/**/*.html')
+  if(!TEMP) {
+    beep();
+    console.log('[Litmus]'.bold.red + ' You are missing parameters. Please see README.md');
+    process.exit();
+  }
+
+  return gulp.src('dist/**/' + TEMP + '.html')
     .pipe($.if(!!awsURL, $.replace(/=('|")(\/?assets\/img)/g, "=$1"+ awsURL)))
     .pipe($.litmus(CONFIG.litmus))
     .pipe(gulp.dest('dist'));
