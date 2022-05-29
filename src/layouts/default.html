@@ -14,14 +14,16 @@
   <body>
     <span class="preheader">{{description}}</span>
     <table class="body">
-      <tr>
-        <td class="center" align="center" valign="top">
-          <center>
-            {{!-- Pages you create in the src/pages/ folder are inserted here when the flattened emails are created. --}}
-            {{> body}}
-          </center>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td class="center" align="center" valign="top">
+            <center>
+              {{!-- Pages you create in the src/pages/ folder are inserted here when the flattened emails are created. --}}
+              {{> body}}
+            </center>
+          </td>
+        </tr>
+      </tbody>
     </table>
     <!-- prevent Gmail on iOS font size manipulation -->
    <div style="display:none; white-space:nowrap; font:15px courier; line-height:0;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
