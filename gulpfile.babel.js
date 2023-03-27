@@ -14,8 +14,7 @@ import beep     from 'beepbeep';
 
 const $ = plugins();
 
-var dartSass = require('gulp-sass');
-dartSass.compiler = require('sass');
+var dartSass = require('gulp-sass')(require('sass'));
 
 // Look for the --production flag
 const PRODUCTION = !!yargs.argv.production;
