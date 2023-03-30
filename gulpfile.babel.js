@@ -12,10 +12,12 @@ import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
 
+// node v10 fix
+import 'globalthis/auto';
+
 const $ = plugins();
 
-var dartSass = require('gulp-sass');
-dartSass.compiler = require('sass');
+var dartSass = require('gulp-sass')(require('sass'));
 
 // Look for the --production flag
 const PRODUCTION = !!yargs.argv.production;
