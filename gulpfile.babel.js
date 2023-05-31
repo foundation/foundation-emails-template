@@ -1,5 +1,6 @@
 import gulp     from 'gulp';
 import plugins  from 'gulp-load-plugins';
+import uncss    from 'postcss-uncss';
 import browser  from 'browser-sync';
 import rimraf   from 'rimraf';
 import panini   from 'panini';
@@ -77,10 +78,7 @@ function sass() {
     .pipe(dartSass.sync({
         includePaths: ['node_modules/foundation-emails/scss']
     }).on('error', dartSass.logError))
-    .pipe($.if(PRODUCTION, $.uncss(
-      {
-        html: ['dist/**/*.html']
-      })))
+    .pipe($.if(PRODUCTION, $.postcss([uncss({ html: ['dist/**/*.html'] })])))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest('dist/css'));
 }
