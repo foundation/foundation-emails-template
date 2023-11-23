@@ -12,9 +12,13 @@ import path     from 'path';
 import merge    from 'merge-stream';
 import beep     from 'beepbeep';
 
+// node v10 fix
+import 'globalthis/auto';
+
 const $ = plugins();
 
-var dartSass = require('gulp-sass');
+var dartSass = require('gulp-sass')(require('sass'));
+
 dartSass.compiler = require('sass');
 
 // Look for the --production flag
@@ -74,8 +78,8 @@ function resetPages(done) {
 function sass() {
   return gulp.src('src/assets/scss/app.scss')
     .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
-    .pipe(dartSass.sync({
-        includePaths: ['node_modules/foundation-emails/scss']
+    .pipe(dartSass({
+      includePaths: ['node_modules/foundation-emails/scss']
     }).on('error', dartSass.logError))
     .pipe($.if(PRODUCTION, $.uncss(
       {
